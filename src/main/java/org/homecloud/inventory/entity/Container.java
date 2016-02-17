@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.homecloud.inventory;
+package org.homecloud.inventory.entity;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import java.util.List;
+import javax.persistence.*;
 
 /**
  *
@@ -25,6 +24,23 @@ public class Container implements Serializable {
     private Container parent;
     private String description;
     private String itemId;
+    @OneToMany
+    @JoinTable(name="contains_item",
+        joinColumns = {@JoinColumn(name="container_id")},
+        inverseJoinColumns = {@JoinColumn(name="item_id")}
+    )
+    private List<Item> items;
+
+    @OneToMany(mappedBy = "parent")
+    private List<Container> children;
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
 
     public Container getParent() {
         return parent;
@@ -84,7 +100,7 @@ public class Container implements Serializable {
 
     @Override
     public String toString() {
-        return "org.homecloud.inventory.Container[ id=" + id + " ]";
+        return "org.homecloud.inventory.entity.Container[ id=" + id + " ]";
     }
     
 }
