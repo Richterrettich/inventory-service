@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.homecloud.inventory.service;
+package org.homecloud.inventory.rest;
 
-import java.util.Set;
 import javax.ws.rs.core.Application;
+import java.util.Set;
 
 /**
  *
  * @author rene
  */
-@javax.ws.rs.ApplicationPath("webresources")
+@javax.ws.rs.ApplicationPath("/")
 public class ApplicationConfig extends Application {
 
     @Override
@@ -29,8 +29,8 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(org.homecloud.inventory.service.ContainerFacadeREST.class);
-        resources.add(org.homecloud.inventory.service.ItemFacadeREST.class);
+        resources.add(ContainerFacade.class);
+        resources.add(ItemFacade.class);
     }
-    
+
 }

@@ -5,21 +5,24 @@
  */
 package org.homecloud.inventory.entity;
 
+import org.homecloud.erp.commons.entity.BaseEntity;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author rene
  */
 @Entity
-public class Container implements Serializable {
+@XmlRootElement
+public class Container extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    private String id;
-    
+
     @ManyToOne
     private Container parent;
     private String description;
@@ -34,6 +37,7 @@ public class Container implements Serializable {
     @OneToMany(mappedBy = "parent")
     private List<Container> children;
 
+    @XmlTransient
     public List<Item> getItems() {
         return items;
     }
@@ -65,23 +69,13 @@ public class Container implements Serializable {
     public void setItemId(String itemId) {
         this.itemId = itemId;
     }
-    
-    
-    
-    
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (super.getId() != null ? super.getId().hashCode() : 0);
         return hash;
     }
 
@@ -92,15 +86,12 @@ public class Container implements Serializable {
             return false;
         }
         Container other = (Container) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (super.getId() == null && other.getId() != null) || (super.getId() != null && !super.getId().equals(other.getId()));
     }
 
     @Override
     public String toString() {
-        return "org.homecloud.inventory.entity.Container[ id=" + id + " ]";
+        return "org.homecloud.inventory.entity.Container[ id=" + super.getId() + " ]";
     }
-    
+
 }

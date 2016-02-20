@@ -5,27 +5,31 @@
  */
 package org.homecloud.inventory.entity;
 
+import org.homecloud.erp.commons.entity.BaseEntity;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author rene
  */
 @Entity
-public class Item implements Serializable {
+@XmlRootElement
+public class Item extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    private String id;
-    
+
     private String vendorId;
     private LocalDateTime time;
     private String unit;
     private int unitSize;
     private int amount;
     private String upc;
+    private String imageId;
+
     @ManyToOne
     @JoinTable(name="contains_item",
         joinColumns = {@JoinColumn(name="item_id")},
@@ -33,6 +37,21 @@ public class Item implements Serializable {
     )
     private Container container;
 
+    public String getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
+    }
+
+    public Container getContainer() {
+        return container;
+    }
+
+    public void setContainer(Container container) {
+        this.container = container;
+    }
 
     public String getVendorId() {
         return vendorId;
@@ -82,18 +101,11 @@ public class Item implements Serializable {
         this.upc = upc;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (getId() != null ? getId().hashCode() : 0);
         return hash;
     }
 
@@ -104,7 +116,7 @@ public class Item implements Serializable {
             return false;
         }
         Item other = (Item) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.getId() == null && other.getId() != null) || (getId() != null && !getId().equals(other.getId()))) {
             return false;
         }
         return true;
@@ -112,7 +124,7 @@ public class Item implements Serializable {
 
     @Override
     public String toString() {
-        return "org.homecloud.inventory.entity.Item[ id=" + id + " ]";
+        return "org.homecloud.inventory.entity.Item[ id=" + getId() + " ]";
     }
-    
+
 }
